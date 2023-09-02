@@ -21,14 +21,13 @@ const sendMailToUser = async(userMail,token)=>{
     html: `
     <h1>Sistema de gestión (VET-ESFOT 🐶 😺)</h1>
     <hr>
-    <a href="http://localhost:5173/confirmar/${token}">Clic para confirmar tu cuenta</a>
+    <a href="https://backend-veterinary.onrender.com/confirmar/${token}">Clic para confirmar tu cuenta</a>
     <hr>
     <footer>Grandote te da la Bienvenida!</footer>
     `
     });
     console.log("Mensaje enviado satisfactoriamente: ", info.messageId);
 }
-
 
 // send mail with defined transport object
 const sendMailToRecoveryPassword = async(userMail,token)=>{
@@ -39,7 +38,7 @@ const sendMailToRecoveryPassword = async(userMail,token)=>{
     html: `
     <h1>Sistema de gestión (VET-ESFOT 🐶 😺)</h1>
     <hr>
-    <a href="http://localhost:5173/recuperar-password/${token}">Clic para reestablecer tu contraseña</a>
+    <a href="https://backend-veterinary.onrender.com/recuperar-password/${token}">Clic para reestablecer tu contraseña</a>
     <hr>
     <footer>Grandote te da la Bienvenida!</footer>
     `
