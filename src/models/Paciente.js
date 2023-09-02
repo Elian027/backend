@@ -32,16 +32,16 @@ const pacienteSchema = new Schema({
         trim:true,
         default:Date.now()
     },
-    sintomas:{
-        type:String,
-        require:true,
-        trim:true
-    },
     salida:{
         type:Date,
         require:true,
         trim:true,
         default:Date.now()
+    },
+    sintomas:{
+        type:String,
+        require:true,
+        trim:true
     },
     estado:{
         type:Boolean,
