@@ -21,6 +21,9 @@ app.use(express.json())
 
 
 // Rutas 
+app.get('/',(req,res)=>{
+    res.send("Server on")
+})
 app.use('/api',routerVeterinarios)
 app.use('/api',routerPacientes)
 // Manejo de una ruta que no sea encontrada
