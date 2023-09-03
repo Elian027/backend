@@ -3,6 +3,8 @@ import dotenv from 'dotenv'
 import cors from 'cors';
 import routerVeterinarios from './routers/veterinario_routes.js'
 import routerPacientes from './routers/paciente_routes.js'
+import routerSwagger from './routers/swagger_routes.js'
+import {swaggerDocsIN} from './controllers/swagger_controller.js';
 
 // Inicializaciones
 const app = express()
@@ -25,6 +27,8 @@ app.get('/',(req,res)=>{
 })
 app.use('/api',routerVeterinarios)
 app.use('/api',routerPacientes)
+app.use('/api',routerSwagger)
+swaggerDocsIN(app)
 // Manejo de una ruta que no sea encontrada
 app.use((req,res)=>res.status(404).send("Endpoint no encontrado - 404"))
    

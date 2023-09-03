@@ -1,10 +1,10 @@
-import {Router} from 'express'
-const router = Router()
+import { Router } from 'express';
+const router = Router();
 
 import {
-    swaggerDocs
+  swaggerDocs
 } from "../controllers/swagger_controller.js";
 
-router.get("/docs.json" ,swaggerDocs);
+router.get("docs.json", swaggerDocs);
 
-export default router
+export default router;
