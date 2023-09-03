@@ -1,4 +1,4 @@
-import {Router} from 'express'
+import { Router } from 'express'
 import {
     actualizarPaciente,
     detallePaciente,
@@ -25,12 +25,12 @@ const router = Router()
  *         description: Lista de pacientes.
  *         content:
  *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/Paciente' // Define el esquema del objeto Paciente aquí
+ *              example:
+ *               - id: 1
+ *                 nombre: Paciente1
+ *                 propietario: Dueño1
  */
-router.get("/pacientes",verificarAutenticacion,listarPacientes);
+router.get("/pacientes", verificarAutenticacion, listarPacientes);
 
 /**
  * @swagger
@@ -52,8 +52,13 @@ router.get("/pacientes",verificarAutenticacion,listarPacientes);
  *         description: Detalles del paciente obtenidos con éxito.
  *         content:
  *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Paciente'  # Referencia al esquema del modelo de Paciente
+ *              example:
+ *                 paciente: Max
+ *                 propietario: Juan 
+ *                 email: nuevo@gmail.com
+ *                 celular: 0987654321
+ *                 convencional: 02312456
+ *                 sintomas: vomito, etc
  *       400:
  *         description: Error en la solicitud.
  *       401:
@@ -83,8 +88,8 @@ router.get("/paciente/:id", verificarAutenticacion, detallePaciente);
  *         description: Paciente registrado con éxito.
  *         content:
  *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Paciente'  # Referencia al esquema del modelo de Paciente
+ *             example:
+ *               message: Paciente registrado con éxito.
  *       400:
  *         description: Error en la solicitud.
  *       401:
@@ -115,14 +120,14 @@ router.post("/paciente/registro", verificarAutenticacion, registrarPaciente);
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/Paciente'  # Referencia al esquema del modelo de Paciente
+ *             $ref: '#/components/schemas/Paciente'  
  *     responses:
  *       200:
  *         description: Paciente actualizado con éxito.
  *         content:
  *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Paciente'  # Referencia al esquema del modelo de Paciente
+ *             example:
+ *               message: Paciente actualizado 
  *       400:
  *         description: Error en la solicitud.
  *       401:
