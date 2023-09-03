@@ -76,13 +76,15 @@ router.get("/paciente/:id", verificarAutenticacion, detallePaciente);
  *     description: Registra un nuevo paciente en la base de datos.
  *     tags:
  *       - Pacientes
+ *     security:
+ *       - BearerAuth: []
  *     requestBody:
  *       description: Datos del paciente a registrar.
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/Paciente'  # Referencia al esquema del modelo de Paciente
+ *             $ref: '#/components/schemas/Paciente'  
  *     responses:
  *       201:
  *         description: Paciente registrado con éxito.
@@ -92,10 +94,16 @@ router.get("/paciente/:id", verificarAutenticacion, detallePaciente);
  *               message: Paciente registrado con éxito.
  *       400:
  *         description: Error en la solicitud.
+ *         content:
+ *           application/json:
+ *             example:
+ *               message: Error en la solicitud.
  *       401:
  *         description: No autorizado, se requiere autenticación.
- *       500:
- *         description: Error interno del servidor.
+ *         content:
+ *           application/json:
+ *             example:
+ *               message: Se requiere autenticación.
  */
 router.post("/paciente/registro", verificarAutenticacion, registrarPaciente);
 
@@ -120,7 +128,7 @@ router.post("/paciente/registro", verificarAutenticacion, registrarPaciente);
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/Paciente'  
+ *             $ref: '#/components/schemas/Paciente'  # Referencia al esquema del modelo de Paciente
  *     responses:
  *       200:
  *         description: Paciente actualizado con éxito.

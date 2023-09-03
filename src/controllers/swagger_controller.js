@@ -16,7 +16,7 @@ const options = {
       },
     ],
   },
-  apis: ['src/routers/*.js', '../database.js'],
+  apis: ['src/routers/*.js'],
   components:{
     schemas:{
       Paciente,
@@ -34,7 +34,6 @@ const swaggerDocsIN = (app)=>{
 const swaggerDocs = (req, res) => {
   res.setHeader("Content-Type", "application/json");
     res.send(swaggerSpec);
-    console.log('Está habilitada en el puerto');
 };
 
 export { swaggerDocs, 
