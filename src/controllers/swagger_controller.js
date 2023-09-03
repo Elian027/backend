@@ -7,12 +7,12 @@ const options = {
   definition: {
     openapi: '3.1.0',
     info: {
-      title: 'Veterinary Managment API',
+      title: 'Swagger Veterinary',
       version: '1.0.0',
     },
     servers: [
       {
-        url: 'https://veterinary-managment.onrender.com/api',
+        url: 'https://backend-veterinary.onrender.com/api',
       },
     ],
   },
