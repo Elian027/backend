@@ -4,7 +4,6 @@ import cors from 'cors';
 import routerVeterinarios from './routers/veterinario_routes.js'
 import routerPacientes from './routers/paciente_routes.js'
 
-
 // Inicializaciones
 const app = express()
 dotenv.config()
