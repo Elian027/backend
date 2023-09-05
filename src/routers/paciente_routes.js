@@ -29,6 +29,12 @@ const router = Router()
  *               - id: 1
  *                 nombre: Paciente1
  *                 propietario: Dueño1
+ *       401:
+ *         description: No autorizado, se requiere autenticación.
+ *         content:
+ *           application/json:
+ *             example:
+ *               message: No autorizado, se requiere autenticación.
  */
 router.get("/pacientes", verificarAutenticacion, listarPacientes);
 
@@ -59,12 +65,18 @@ router.get("/pacientes", verificarAutenticacion, listarPacientes);
  *                 celular: 0987654321
  *                 convencional: 02312456
  *                 sintomas: vomito, etc
- *       400:
- *         description: Error en la solicitud.
  *       401:
  *         description: No autorizado, se requiere autenticación.
+ *         content:
+ *           application/json:
+ *             example:
+ *               message: No autorizado, se requiere autenticación.
  *       404:
  *         description: Paciente no encontrado.
+ *         content:
+ *           application/json:
+ *             example:
+ *               message: Paciente no encontrado.
  */
 router.get("/paciente/:id", verificarAutenticacion, detallePaciente);
 
@@ -73,37 +85,53 @@ router.get("/paciente/:id", verificarAutenticacion, detallePaciente);
  * /paciente/registro:
  *   post:
  *     summary: Registrar un nuevo paciente
- *     description: Registra un nuevo paciente en la base de datos.
+ *     description: Registrar un nuevo paciente en el sistema.
  *     tags:
  *       - Pacientes
  *     security:
  *       - BearerAuth: []
  *     requestBody:
- *       description: Datos del paciente a registrar.
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/Paciente'  
+ *             type: object
+ *             properties:
+ *               nombre:
+ *                 type: string
+ *               propietario:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *               celular:
+ *                 type: string
+ *               convencional:
+ *                 type: string
+ *               ingreso:
+ *                 type: string
+ *               salida:
+ *                 type: string
+ *               sintomas:
+ *                 type: string
  *     responses:
- *       201:
+ *       200:
  *         description: Paciente registrado con éxito.
  *         content:
  *           application/json:
  *             example:
  *               message: Paciente registrado con éxito.
  *       400:
- *         description: Error en la solicitud.
+ *         description: Datos de registro no válidos o falta de autenticación.
  *         content:
  *           application/json:
  *             example:
- *               message: Error en la solicitud.
+ *               message: Datos de registro no válidos o falta de autenticación.
  *       401:
- *         description: No autorizado, se requiere autenticación.
+ *         description: No autorizado, token de acceso no válido.
  *         content:
  *           application/json:
  *             example:
- *               message: Se requiere autenticación.
+ *               message: No autorizado, token de acceso no válido.
  */
 router.post("/paciente/registro", verificarAutenticacion, registrarPaciente);
 
@@ -111,10 +139,12 @@ router.post("/paciente/registro", verificarAutenticacion, registrarPaciente);
  * @swagger
  * /paciente/actualizar/{id}:
  *   put:
- *     summary: Actualizar paciente por ID
- *     description: Actualiza los datos de un paciente existente por su ID.
+ *     summary: Actualizar un paciente existente
+ *     description: Actualiza los datos de un paciente existente en el sistema.
  *     tags:
  *       - Pacientes
+ *     security:
+ *       - BearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -123,27 +153,47 @@ router.post("/paciente/registro", verificarAutenticacion, registrarPaciente);
  *         schema:
  *           type: string
  *     requestBody:
- *       description: Nuevos datos del paciente a actualizar.
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/Paciente'  # Referencia al esquema del modelo de Paciente
+ *             type: object
+ *             properties:
+ *               nombre:
+ *                 type: string
+ *               propietario:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *               celular:
+ *                 type: string
+ *               convencional:
+ *                 type: string
+ *               ingreso:
+ *                 type: string
+ *               salida:
+ *                 type: string
+ *               sintomas:
+ *                 type: string
  *     responses:
  *       200:
  *         description: Paciente actualizado con éxito.
  *         content:
  *           application/json:
  *             example:
- *               message: Paciente actualizado 
+ *               message: Paciente actualizado con éxito.
  *       400:
- *         description: Error en la solicitud.
- *       401:
- *         description: No autorizado, se requiere autenticación.
+ *         description: Datos de actualización no válidos o falta de autenticación.
+ *         content:
+ *           application/json:
+ *             example:
+ *               message: Datos de actualización no válidos o falta de autenticación.
  *       404:
  *         description: Paciente no encontrado.
- *       500:
- *         description: Error interno del servidor.
+ *         content:
+ *           application/json:
+ *             example:
+ *               message: Paciente no encontrado.
  */
 router.put("/paciente/actualizar/:id", verificarAutenticacion, actualizarPaciente);
 
@@ -165,14 +215,16 @@ router.put("/paciente/actualizar/:id", verificarAutenticacion, actualizarPacient
  *     responses:
  *       204:
  *         description: Paciente eliminado con éxito.
- *       400:
- *         description: Error en la solicitud.
- *       401:
- *         description: No autorizado, se requiere autenticación.
+ *         content:
+ *           application/json:
+ *             example:
+ *               message: Paciente eliminado con éxito.
  *       404:
  *         description: Paciente no encontrado.
- *       500:
- *         description: Error interno del servidor.
+ *         content:
+ *           application/json:
+ *             example:
+ *               message: Paciente no encontrado.
  */
 router.delete("/paciente/eliminar/:id", verificarAutenticacion, eliminarPaciente);
 
