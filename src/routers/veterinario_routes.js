@@ -29,5 +29,4 @@ router.put('/veterinario/actualizarpassword',verificarAutenticacion,actualizarPa
 router.get('/veterinario/:id',verificarAutenticacion,detalleVeterinario)
 router.put('/veterinario/:id',verificarAutenticacion,actualizarPerfil)
 
-
 export default router;
