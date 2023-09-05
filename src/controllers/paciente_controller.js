@@ -14,16 +14,24 @@ const detallePaciente = async(req,res)=>{
     res.status(200).json(paciente)
 }
 
-const registrarPaciente = async(req,res)=>{
-    if (Object.values(req.body).includes("")) return res.status(400).json({msg:"Lo sentimos, debes llenar todos los campos"})
+const registrarPaciente = async (req, res) => {
+    if (Object.values(req.body).includes("")) {
+        return res.status(400).json({ msg: "Lo sentimos, debes llenar todos los campos" });
+    }
     // Verifica que el veterinario exista
-    const veterinarioExistente = await Veterinario.findById(req.veterinarioBDD._id)
-    if (!veterinarioExistente) return res.status(400).json({ msg: "El veterinario no existe" })
-    const nuevoPaciente = new Paciente(req.body)
+    const veterinarioExistente = await Veterinario.findById(req.veterinarioBDD._id);
+    if (!veterinarioExistente) {
+        return res.status(400).json({ msg: "El veterinario no existe" });
+    }
+    // Crea un nuevo paciente con los datos proporcionados
+    const nuevoPaciente = new Paciente(req.body);
+    // Asigna al paciente el ID del veterinario como una referencia,
+    // en lugar de usarlo como su propio ID
     nuevoPaciente.veterinario = req.veterinarioBDD._id;
-    await nuevoPaciente.save()
-    res.status(200).json({msg:"Registro exitoso del paciente"})
-}
+    // Guarda el paciente en la base de datos, lo que generará automáticamente un nuevo ID
+    await nuevoPaciente.save();
+    res.status(200).json({ msg: "Registro exitoso del paciente" });
+};
 
 const actualizarPaciente = async(req,res)=>{
     const {id} = req.params
