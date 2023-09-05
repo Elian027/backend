@@ -20,7 +20,7 @@ const registrarPaciente = async(req,res)=>{
     const veterinarioExistente = await Veterinario.findById(req.veterinarioBDD._id)
     if (!veterinarioExistente) return res.status(400).json({ msg: "El veterinario no existe" })
     const nuevoPaciente = new Paciente(req.body)
-    nuevoPaciente.veterinario=req.body.id
+    nuevoPaciente.veterinario = req.veterinarioBDD._id;
     await nuevoPaciente.save()
     res.status(200).json({msg:"Registro exitoso del paciente"})
 }
