@@ -2,38 +2,52 @@ import Paciente from "../models/Paciente.js"
 import Veterinario from "../models/Veterinario.js"
 import mongoose from "mongoose"
 
-const listarPacientes = async (req,res)=>{
-    const pacientes = await Paciente.find({estado:true}).where('veterinario').equals(req.veterinarioBDD).select("-salida -createdAt -updatedAt -__v").populate('veterinario','_id nombre apellido')
+const listarPacientes = async (req, res) => {
+    const pacientes = await Paciente.find({ estado: true }).where('veterinario').equals(req.veterinarioBDD).select("-salida -createdAt -updatedAt -__v").populate('veterinario', '_id nombre apellido')
     res.status(200).json(pacientes)
 }
 
-const detallePaciente = async(req,res)=>{
-    const {id} = req.params
-    if( !mongoose.Types.ObjectId.isValid(id) ) return res.status(404).json({msg:`Lo sentimos, no existe el veterinario ${id}`});
-    const paciente = await Paciente.findById(id).select("-createdAt -updatedAt -__v").populate('veterinario','_id nombre apellido')
+const detallePaciente = async (req, res) => {
+    const { id } = req.params
+    if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).json({ msg: `Lo sentimos, no existe el veterinario ${id}` });
+    const paciente = await Paciente.findById(id).select("-createdAt -updatedAt -__v").populate('veterinario', '_id nombre apellido')
     res.status(200).json(paciente)
 }
 
-const registrarPaciente = async(req,res)=>{
-    try{
-        if (Object.values(req.body).includes("")) return res.status(400).json({msg:"Lo sentimos, debes llenar todos los campos"})
-        const {nombre, propietario, email, celular, convencional, ingreso, salida, sintomas, veterinario} = req.body
-        const nuevoPaciente = new Paciente({nombre, propietario, email, celular, convencional, ingreso, salida, sintomas, veterinario})
-        nuevoPaciente.veterinario=req.body.id
-        await nuevoPaciente.save()
-        res.status(200).json({msg:"Registro exitoso del paciente"})
-    }
-    catch(error){
-        console.log(error)
-    }
-}
+const registrarPaciente = async (req, res) => {
+    try {
+        // Verifica si ya existe un paciente con el mismo email o celular
+        const pacienteExistente = await Paciente.findOne({
+            $or: [
+                { email: req.body.email },
+                { celular: req.body.celular }
+            ]
+        });
+        if (pacienteExistente) {
+            return res.status(400).json({ msg: "Ya existe un paciente registrado con el mismo email o celular." });
+        }
+        // Si no existe un paciente con el mismo email o celular, procede a registrar al nuevo paciente
+        if (Object.values(req.body).includes("")) {
+            return res.status(400).json({ msg: "Lo sentimos, debes llenar todos los campos" });
+        }
+        const { nombre, propietario, email, celular, convencional, ingreso, salida, sintomas, veterinario } = req.body;
+        const nuevoPaciente = new Paciente({ nombre, propietario, email, celular, convencional, ingreso, salida, sintomas, veterinario })
+        nuevoPaciente.veterinario = req.body.id;
+        await nuevoPaciente.save();
 
-const actualizarPaciente = async(req,res)=>{
-    const {id} = req.params
-    if (Object.values(req.body).includes("")) return res.status(400).json({msg:"Lo sentimos, debes llenar todos los campos"})
-    if( !mongoose.Types.ObjectId.isValid(id) ) return res.status(404).json({msg:`Lo sentimos, no existe el veterinario ${id}`});
-    await Paciente.findByIdAndUpdate(req.params.id,req.body)
-    res.status(200).json({msg:"Actualización exitosa del paciente"})
+        res.status(200).json({ msg: "Registro exitoso del paciente" });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ msg: "Error interno del servidor" });
+    }
+};
+
+const actualizarPaciente = async (req, res) => {
+    const { id } = req.params
+    if (Object.values(req.body).includes("")) return res.status(400).json({ msg: "Lo sentimos, debes llenar todos los campos" })
+    if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).json({ msg: `Lo sentimos, no existe el veterinario ${id}` });
+    await Paciente.findByIdAndUpdate(req.params.id, req.body)
+    res.status(200).json({ msg: "Actualización exitosa del paciente" })
 }
 
 const eliminarPaciente = async (req, res) => {
