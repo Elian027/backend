@@ -1,5 +1,5 @@
 import request from 'supertest';
-import app from '../../../src/server'; // Asegúrate de que la ruta sea correcta
+import app from '../../src/server'
 
 describe('Veterinario Controller', () => {
   it('Debería devolver un código de estado 200 al realizar una solicitud GET a /api/veterinarios', async () => {
