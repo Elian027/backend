@@ -44,7 +44,7 @@ const eliminarPaciente = async (req, res) => {
         if (!pacienteEliminado) {
             return res.status(404).json({ msg: `Lo sentimos, no existe el paciente con ID ${id}` });
         }
-        res.status(204).json(); // Respuesta exitosa sin contenido (204 No Content)
+        res.status(204).json(); // Respuesta exitosa sin contenido
     } catch (error) {
         console.error(error);
         res.status(500).json({ msg: "Error interno del servidor" });
