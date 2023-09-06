@@ -453,7 +453,7 @@ router.put('/veterinario/:id',verificarAutenticacion,actualizarPerfil)
  *         direccion:
  *           type: string
  *         telefono:
- *           type: number
+ *           type: string
  *         email:
  *           type: string
  *         password:

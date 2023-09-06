@@ -118,14 +118,16 @@ router.post("/paciente/registro", verificarAutenticacion, registrarPaciente);
  * /paciente/actualizar/{id}:
  *   put:
  *     summary: Actualizar perfil de un paciente por ID
- *     security:
- *       - bearerAuth: []
+ *     description: Actualiza el perfil de un paciente existente por su ID.
  *     tags:
  *       - Pacientes
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
- *       - name: id
- *         in: path
+ *       - in: path
+ *         name: id
  *         required: true
+ *         description: ID del paciente a actualizar.
  *         schema:
  *           type: string
  *     requestBody:
@@ -136,23 +138,23 @@ router.post("/paciente/registro", verificarAutenticacion, registrarPaciente);
  *             $ref: '#/components/schemas/Paciente'
  *     responses:
  *       '200':
- *         description: Perfil del paciente actualizado exitosamente
+ *         description: Perfil del paciente actualizado exitosamente.
  *         content:
  *           application/json:
  *             example:
  *               message: Perfil del paciente actualizado exitosamente
  *       '400':
- *         description: Campos incompletos
+ *         description: Campos incompletos o formato incorrecto de datos.
  *         content:
  *           application/json:
  *             example:
- *               message: Campos incompletos
+ *               message: Campos incompletos o formato incorrecto de datos.
  *       '404':
- *         description: Paciente no encontrado
+ *         description: Paciente no encontrado.
  *         content:
  *           application/json:
  *             example:
- *               message: Paciente no encontrado
+ *               message: Paciente no encontrado.
  */
 router.put("/paciente/actualizar/:id", verificarAutenticacion, actualizarPaciente);
 
