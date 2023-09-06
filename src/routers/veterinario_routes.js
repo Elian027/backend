@@ -149,7 +149,7 @@ router.get('/veterinarios', listarVeterinarios);
  *               email:
  *                 type: string
  *             example:
- *               email: nuevo@ejemplo.com
+ *               email: ejemplo@correo.com
  *     responses:
  *       200:
  *         description: Correo electrónico de recuperación enviado con éxito.
