@@ -12,7 +12,7 @@ const options = {
     },
     servers: [
       {
-        url: 'https://backend-veterinary.onrender.com',
+        url: 'https://backend-veterinary.onrender.com/api',
       },
     ],
   },

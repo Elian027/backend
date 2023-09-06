@@ -15,31 +15,13 @@ const detallePaciente = async (req, res) => {
 }
 
 const registrarPaciente = async (req, res) => {
-    try {
-        // Verifica si ya existe un paciente con el mismo email o celular
-        const pacienteExistente = await Paciente.findOne({
-            $or: [
-                { email: req.body.email },
-                { celular: req.body.celular }
-            ]
-        });
-        if (pacienteExistente) {
-            return res.status(400).json({ msg: "Ya existe un paciente registrado con el mismo email o celular." });
-        }
-        // Si no existe un paciente con el mismo email o celular, procede a registrar al nuevo paciente
-        if (Object.values(req.body).includes("")) {
-            return res.status(400).json({ msg: "Lo sentimos, debes llenar todos los campos" });
-        }
-        const { nombre, propietario, email, celular, convencional, ingreso, salida, sintomas, veterinario } = req.body;
-        const nuevoPaciente = new Paciente({ nombre, propietario, email, celular, convencional, ingreso, salida, sintomas, veterinario })
-        nuevoPaciente.veterinario = req.body.id;
-        await nuevoPaciente.save();
-
-        res.status(200).json({ msg: "Registro exitoso del paciente" });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ msg: "Error interno del servidor" });
-    }
+    if (Object.values(req.body).includes("")) return res.status(400).json({ msg: "Lo sentimos, debes llenar todos los campos" })
+    const veterinarioExistente = await Veterinario.findById(req.veterinarioBDD._id)
+    if (!veterinarioExistente) return res.status(400).json({ msg: "El veterinario no existe" })
+    const nuevoPaciente = new Paciente(req.body)
+    nuevoPaciente.veterinario = req.veterinarioBDD._id
+    await nuevoPaciente.save()
+    res.status(200).json({ msg: "Registro exitoso del paciente" })
 };
 
 const actualizarPaciente = async (req, res) => {

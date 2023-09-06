@@ -19,7 +19,7 @@ const router = Router()
  *     tags:
  *       - Pacientes
  *     security:
- *       - BearerAuth: []
+ *       - bearerAuth: []
  *     responses:
  *       200:
  *         description: Lista de pacientes.
@@ -46,6 +46,8 @@ router.get("/pacientes", verificarAutenticacion, listarPacientes);
  *     description: Obtiene los detalles de un paciente según su ID.
  *     tags:
  *       - Pacientes
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -84,54 +86,30 @@ router.get("/paciente/:id", verificarAutenticacion, detallePaciente);
  * @swagger
  * /paciente/registro:
  *   post:
- *     summary: Registrar un nuevo paciente
- *     description: Registrar un nuevo paciente en el sistema.
+ *     summary: Registrar nuevo paciente
+ *     security:
+ *       - bearerAuth: []
  *     tags:
  *       - Pacientes
- *     security:
- *       - BearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             type: object
- *             properties:
- *               nombre:
- *                 type: string
- *               propietario:
- *                 type: string
- *               email:
- *                 type: string
- *               celular:
- *                 type: string
- *               convencional:
- *                 type: string
- *               ingreso:
- *                 type: string
- *               salida:
- *                 type: string
- *               sintomas:
- *                 type: string
+ *             $ref: '#/components/schemas/PacienteInput'
  *     responses:
- *       200:
- *         description: Paciente registrado con éxito.
+ *       '200':
+ *         description: Paciente registrado exitosamente
  *         content:
  *           application/json:
  *             example:
- *               message: Paciente registrado con éxito.
- *       400:
- *         description: Datos de registro no válidos o falta de autenticación.
+ *               message: Paciente registrado exitosamente
+ *       '400':
+ *         description: Campos incompletos
  *         content:
  *           application/json:
  *             example:
- *               message: Datos de registro no válidos o falta de autenticación.
- *       401:
- *         description: No autorizado, token de acceso no válido.
- *         content:
- *           application/json:
- *             example:
- *               message: No autorizado, token de acceso no válido.
+ *               message: Campos incompletos
  */
 router.post("/paciente/registro", verificarAutenticacion, registrarPaciente);
 
@@ -139,17 +117,15 @@ router.post("/paciente/registro", verificarAutenticacion, registrarPaciente);
  * @swagger
  * /paciente/actualizar/{id}:
  *   put:
- *     summary: Actualizar un paciente existente
- *     description: Actualiza los datos de un paciente existente en el sistema.
+ *     summary: Actualizar perfil de un paciente por ID
+ *     security:
+ *       - bearerAuth: []
  *     tags:
  *       - Pacientes
- *     security:
- *       - BearerAuth: []
  *     parameters:
- *       - in: path
- *         name: id
+ *       - name: id
+ *         in: path
  *         required: true
- *         description: ID del paciente a actualizar.
  *         schema:
  *           type: string
  *     requestBody:
@@ -157,43 +133,26 @@ router.post("/paciente/registro", verificarAutenticacion, registrarPaciente);
  *       content:
  *         application/json:
  *           schema:
- *             type: object
- *             properties:
- *               nombre:
- *                 type: string
- *               propietario:
- *                 type: string
- *               email:
- *                 type: string
- *               celular:
- *                 type: string
- *               convencional:
- *                 type: string
- *               ingreso:
- *                 type: string
- *               salida:
- *                 type: string
- *               sintomas:
- *                 type: string
+ *             $ref: '#/components/schemas/PacienteInput'
  *     responses:
- *       200:
- *         description: Paciente actualizado con éxito.
+ *       '200':
+ *         description: Perfil del paciente actualizado exitosamente
  *         content:
  *           application/json:
  *             example:
- *               message: Paciente actualizado con éxito.
- *       400:
- *         description: Datos de actualización no válidos o falta de autenticación.
+ *               message: Perfil del paciente actualizado exitosamente
+ *       '400':
+ *         description: Campos incompletos
  *         content:
  *           application/json:
  *             example:
- *               message: Datos de actualización no válidos o falta de autenticación.
- *       404:
- *         description: Paciente no encontrado.
+ *               message: Campos incompletos
+ *       '404':
+ *         description: Paciente no encontrado
  *         content:
  *           application/json:
  *             example:
- *               message: Paciente no encontrado.
+ *               message: Paciente no encontrado
  */
 router.put("/paciente/actualizar/:id", verificarAutenticacion, actualizarPaciente);
 
@@ -203,6 +162,8 @@ router.put("/paciente/actualizar/:id", verificarAutenticacion, actualizarPacient
  *   delete:
  *     summary: Eliminar paciente por ID
  *     description: Elimina un paciente existente por su ID.
+ *     security:
+ *       - bearerAuth: []
  *     tags:
  *       - Pacientes
  *     parameters:
@@ -213,12 +174,12 @@ router.put("/paciente/actualizar/:id", verificarAutenticacion, actualizarPacient
  *         schema:
  *           type: string
  *     responses:
- *       204:
- *         description: Paciente eliminado con éxito.
+ *       '204':
+ *         description: Paciente eliminado con éxito
  *         content:
  *           application/json:
  *             example:
- *               message: Paciente eliminado con éxito.
+ *               message: Paciente eliminado con éxito
  *       404:
  *         description: Paciente no encontrado.
  *         content:
@@ -228,4 +189,36 @@ router.put("/paciente/actualizar/:id", verificarAutenticacion, actualizarPacient
  */
 router.delete("/paciente/eliminar/:id", verificarAutenticacion, eliminarPaciente);
 
+/**
+ * @swagger
+ * components:
+ *    schemas:
+ *     Paciente:
+ *       type: object
+ *       properties:
+ *         nombre:
+ *           type: string
+ *         propietario:
+ *           type: string
+ *         email:
+ *           type: string
+ *         celular:
+ *           type: string
+ *         convencional:
+ *           type: string
+ *         sintomas:
+ *           type: string
+ *       required:
+ *         - nombre
+ *         - propietario
+ *         - email
+ *         - celular
+ *         - convencional
+ *         - sintomas
+ *    securitySchemes:
+ *      bearerAuth:
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT
+ */
 export default router

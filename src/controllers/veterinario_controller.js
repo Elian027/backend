@@ -76,9 +76,14 @@ const confirmEmail = async (req,res)=>{
     res.status(200).json({msg:"Token confirmado, ya puedes iniciar sesión"}) 
 }
 
-const listarVeterinarios = (req,res)=>{
-    res.status(200).json({res:'lista de veterinarios registrados'})
-}
+const listarVeterinarios = async (req, res) => {
+    try {
+        const veterinarios = await Veterinario.find();
+        res.status(200).json(veterinarios);
+    } catch (error) {
+        res.status(500).json({ error: 'Error al listar veterinarios' });
+    }
+};
 
 const detalleVeterinario = async(req,res)=>{
     const {id} = req.params

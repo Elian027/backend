@@ -55,36 +55,28 @@ router.post('/login',login)
  * @swagger
  * /registro:
  *   post:
- *     summary: Registrar un nuevo usuario
- *     description: Registrar un nuevo usuario en la aplicación.
+ *     summary: Registrar nuevo veterinario
  *     tags:
- *       - Veterinarios
+ *      - Veterinarios
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             type: object
- *             properties:
- *               nombre:
- *                 type: string
- *               email:
- *                 type: string
- *               password:
- *                 type: string
+ *             $ref: '#/components/schemas/VeterinarioInput'
  *     responses:
- *       201:
- *         description: Usuario registrado con éxito.
+ *       '200':
+ *         description: Veterinario registrado exitosamente
  *         content:
  *           application/json:
  *             example:
- *               message: Usuario registrado con exito.
- *       400:
- *         description: Datos de registro no válidos.
+ *               message: Veterinario registrado exitosamente
+ *       '400':
+ *         description: Campos incompletos o email ya registrado
  *         content:
  *           application/json:
  *             example:
- *               message: Datos de registro no válidos.
+ *               message: Campos incompletos o email ya registrado
  */
 router.post('/registro',registro)
 
@@ -124,16 +116,18 @@ router.get('/confirmar/:token', confirmEmail);
  * /veterinarios:
  *   get:
  *     summary: Listar todos los veterinarios
- *     description: Obtiene una lista de todos los veterinarios registrados en el sistema.
  *     tags:
- *       - Veterinarios
+ *      - Veterinarios
  *     responses:
- *       200:
- *         description: Lista de veterinarios obtenida con éxito.
+ *       '200':
+ *         description: Lista de veterinarios obtenida con éxito
  *         content:
  *           application/json:
  *             example:
- *               message: Lista de veterinarios obtenida con éxito.
+ *               - id: 1
+ *                 nombre: Veterinario 1
+ *               - id: 2
+ *                 nombre: Veterinario 2
  */
 router.get('/veterinarios', listarVeterinarios);
 
@@ -207,15 +201,13 @@ router.get('/recuperar-password/:token',comprobarTokenPasword)
  * @swagger
  * /nuevo-password/{token}:
  *   post:
- *     summary: Establecer nueva contraseña
- *     description: Permite al usuario establecer una nueva contraseña después de recibir un token de recuperación de contraseña.
+ *     summary: Establecer nuevo password después de recuperación
  *     tags:
- *       - Autenticación
+ *      - Veterinarios
  *     parameters:
- *       - in: path
- *         name: token
+ *       - name: token
+ *         in: path
  *         required: true
- *         description: Token de recuperación de contraseña.
  *         schema:
  *           type: string
  *     requestBody:
@@ -225,26 +217,32 @@ router.get('/recuperar-password/:token',comprobarTokenPasword)
  *           schema:
  *             type: object
  *             properties:
- *               newPassword:
+ *               password:
  *                 type: string
- *               confirmPassword:
+ *               confirmpassword:
  *                 type: string
- *             example:
- *               newPassword: NuevaContraseña123
- *               confirmPassword: NuevaContraseña123
+ *             required:
+ *               - password
+ *               - confirmpassword
  *     responses:
- *       200:
- *         description: Contraseña actualizada con éxito.
+ *       '200':
+ *         description: Password actualizado exitosamente
  *         content:
  *           application/json:
  *             example:
- *               message: Contraseña actualizada con éxito.
- *       400:
- *         description: Token no válido o expirado, contraseñas no coinciden o no cumplen con los requisitos.
+ *               message: Contraseña actualizada exitosamente. Ahora puedes iniciar sesión con tu nueva contraseña.
+ *       '400':
+ *         description: Campos incompletos o las contraseñas no coinciden
  *         content:
  *           application/json:
  *             example:
- *               message: Token no válido o expirado, contraseñas no coinciden o no cumplen con los requisitos.
+ *               message: Campos incompletos o las contraseñas no coinciden.
+ *       '404':
+ *         description: Token no válido
+ *         content:
+ *           application/json:
+ *             example:
+ *               message: Token de recuperación de contraseña no válido o expirado.
  */
 router.post('/nuevo-password/:token',nuevoPassword)
 
@@ -440,5 +438,31 @@ router.get('/veterinario/:id',verificarAutenticacion,detalleVeterinario)
  *               msg: "La solicitud es incorrecta, verifica los campos"
  */
 router.put('/veterinario/:id',verificarAutenticacion,actualizarPerfil)
+
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     Veterinario:
+ *       type: object
+ *       properties:
+ *         nombre:
+ *           type: string
+ *         apellido:
+ *           type: string
+ *         direccion:
+ *           type: string
+ *         telefono:
+ *           type: number
+ *         email:
+ *           type: string
+ *         password:
+ *           type: string
+ *       required:
+ *         - nombre
+ *         - apellido
+ *         - email
+ *         - password
+ */
 
 export default router;
