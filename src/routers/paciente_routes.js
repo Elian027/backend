@@ -96,7 +96,7 @@ router.get("/paciente/:id", verificarAutenticacion, detallePaciente);
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/PacienteInput'
+ *             $ref: '#/components/schemas/Paciente'
  *     responses:
  *       '200':
  *         description: Paciente registrado exitosamente
@@ -133,7 +133,7 @@ router.post("/paciente/registro", verificarAutenticacion, registrarPaciente);
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/PacienteInput'
+ *             $ref: '#/components/schemas/Paciente'
  *     responses:
  *       '200':
  *         description: Perfil del paciente actualizado exitosamente

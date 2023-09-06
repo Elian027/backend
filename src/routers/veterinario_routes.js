@@ -63,7 +63,7 @@ router.post('/login',login)
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/VeterinarioInput'
+ *             $ref: '#/components/schemas/Veterinario'
  *     responses:
  *       '200':
  *         description: Veterinario registrado exitosamente
@@ -149,7 +149,7 @@ router.get('/veterinarios', listarVeterinarios);
  *               email:
  *                 type: string
  *             example:
- *               email: ejemplo@correo.com
+ *               email: nuevo@ejemplo.com
  *     responses:
  *       200:
  *         description: Correo electrónico de recuperación enviado con éxito.
