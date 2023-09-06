@@ -24,12 +24,7 @@ app.use(express.json())
 // Rutas 
 const swaggerUrl = "https://backend-veterinary.onrender.com/api/docs";
 app.get('/', (req, res) => {
-    res.send(`
-        <h1>Bienvenido a la Veterinaria PoliEPN</h1>
-        <p>¡Gracias por visitarnos!</p>
-        <p>Para acceder a nuestra documentación en Swagger, por favor visita el siguiente enlace:</p>
-        <a href="${swaggerUrl}">${swaggerUrl}</a>
-    `);
+    res.redirect(`https://backend-veterinary.onrender.com/api/docs`);
 });
 app.use('/api',routerVeterinarios)
 app.use('/api',routerPacientes)
