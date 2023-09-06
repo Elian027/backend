@@ -63,7 +63,7 @@ router.post('/login',login)
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/VeterinarioInput'
+ *             $ref: '#/components/schemas/Veterinario'
  *     responses:
  *       '200':
  *         description: Veterinario registrado exitosamente
