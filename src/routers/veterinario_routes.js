@@ -63,7 +63,7 @@ router.post('/login',login)
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/Veterinario'
+ *             $ref: '#/components/schemas/VeterinarioInput'
  *     responses:
  *       '200':
  *         description: Veterinario registrado exitosamente
@@ -78,7 +78,7 @@ router.post('/login',login)
  *             example:
  *               message: Campos incompletos o email ya registrado
  */
-router.post('/registro',registro)
+router.post("/registro", registro);
 
 /**
  * @swagger
