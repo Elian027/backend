@@ -14,15 +14,19 @@ const detallePaciente = async (req, res) => {
     res.status(200).json(paciente)
 }
 
-const registrarPaciente = async (req, res) => {
-    if (Object.values(req.body).includes("")) return res.status(400).json({ msg: "Lo sentimos, debes llenar todos los campos" })
-    const veterinarioExistente = await Veterinario.findById(req.veterinarioBDD._id)
-    if (!veterinarioExistente) return res.status(400).json({ msg: "El veterinario no existe" })
-    const nuevoPaciente = new Paciente(req.body)
-    nuevoPaciente.veterinario = req.veterinarioBDD._id
-    await nuevoPaciente.save()
-    res.status(200).json({ msg: "Registro exitoso del paciente" })
-};
+const registrarPaciente = async(req,res)=>{
+    try{
+        if (Object.values(req.body).includes("")) return res.status(400).json({msg:"Lo sentimos, debes llenar todos los campos"})
+        const {nombre, propietario, email, celular, convencional, ingreso, salida, sintomas, veterinario} = req.body
+        const nuevoPaciente = new Paciente({nombre, propietario, email, celular, convencional, ingreso, salida, sintomas, veterinario})
+        nuevoPaciente.veterinario=req.veterinarioBDD._id
+        await nuevoPaciente.save()
+        res.status(200).json({msg:"Registro exitoso del paciente"})
+    }
+    catch(error){
+        console.log(error)
+    }
+}
 
 const actualizarPaciente = async (req, res) => {
     const { id } = req.params
