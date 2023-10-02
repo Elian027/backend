@@ -4,6 +4,8 @@ import { useParams } from 'react-router-dom';
 import Mensaje from '../componets/Alertas/Mensaje';
 import axios from 'axios';
 
+
+
 const Actualizar = () => {
     const { id } = useParams()
     const [paciente, setPaciente] = useState({})
